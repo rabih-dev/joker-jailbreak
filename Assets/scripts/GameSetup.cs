@@ -140,7 +140,7 @@ public class GameSetup : MonoBehaviour
 
         for (int pileIndex = 0; pileIndex < cornerPiles.Length; pileIndex++)
         {
-            for (int c = 0; c < 6; c++)
+            for (int c = 0; c < 2; c++)
             {
                 GameObject card = currentDeck[currentDeck.Count - 1];
                 currentDeck.RemoveAt(currentDeck.Count - 1);

@@ -13,8 +13,9 @@ public class CardData
     private int position;
 
 
+    
     public CardData(string color, int value, string suit)//, Sprite face, Sprite back, int position)
-    {
+    { 
         this.color = color;
         this.value = value;
         this.suit = suit;

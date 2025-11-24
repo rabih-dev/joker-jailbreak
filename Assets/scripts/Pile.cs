@@ -22,7 +22,7 @@ public class Pile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       RevealTopCard();
+        RevealTopCard();
     }
 
     public void RevealTopCard()
@@ -39,13 +39,18 @@ public class Pile : MonoBehaviour
         }
     }
 
-        public void AddCard(GameObject card)
+    public void AddCard(GameObject card)
     {
         cardsInPile.Add(card);
         card.transform.SetParent(transform, false);
-        
+
 
         Debug.Log("card adicionado à pilha");
+    }
+
+    public void RemoveCard(GameObject card) 
+    {
+        cardsInPile.Remove(card);
     }
 
 
