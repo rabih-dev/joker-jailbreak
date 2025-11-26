@@ -12,6 +12,7 @@ public class Card : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDragHandl
     private Vector3 startDragPos;
     [HideInInspector] public Transform postDragParent;
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,54 +25,65 @@ public class Card : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDragHandl
     {
         HideAndReveal();
     }
-
-    #region Drag n' Drop
-
-    public void OnBeginDrag(PointerEventData eventData)
+    public void SetParent(Pile parent)
     {
-        startDragPos = transform.position;
-        transform.position = Input.mousePosition;
-        cardImageUI.raycastTarget = false;
-        Debug.Log("i got clicked");
-    }
-    public void OnDrag(PointerEventData eventData)
-    {
-        transform.position = Input.mousePosition;
-        Debug.Log("being dragged");
+        pileParent = parent;
     }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        if (postDragParent != null)
-        {
-            transform.SetParent(postDragParent);
-            transform.position = postDragParent.position;
-            postDragParent = null;
-
-            GameManager.GetInstance().StageCard(this.gameObject);
-        }
-
-        else
-        {
-            transform.position = startDragPos;
-        }
-
-        cardImageUI.raycastTarget = true;
-
-
-    }
-
-
-
-
-    #endregion Drag n' Drop
-
-    public void SetCardData(string color, int value, string suit)
+     public void SetCardData(string color, int value, string suit)
     {
         this.cardData.color = color;
         this.cardData.value = value;
         this.cardData.suit = suit;
     }
+
+    #region Drag n' Drop
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if (!cardData.isJoker && !pileParent.isDeckPile)
+        {
+            startDragPos = transform.position;
+            transform.position = Input.mousePosition;
+            cardImageUI.raycastTarget = false;
+            Debug.Log("i got clicked");
+        }
+
+    }
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (!cardData.isJoker && !pileParent.isDeckPile)
+        {
+            transform.position = Input.mousePosition;
+            Debug.Log("being dragged");
+        }
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+        {
+            if (!cardData.isJoker && !pileParent.isDeckPile)
+            {
+                if (postDragParent != null)
+                {
+                    transform.SetParent(postDragParent);
+                    transform.position = postDragParent.position;
+                    postDragParent = null;
+
+                    GameManager.GetInstance().StageCard(this.gameObject);
+                }
+
+                else
+                {
+                    transform.position = startDragPos;
+                }
+
+                cardImageUI.raycastTarget = true;
+            }
+        }
+
+    #endregion Drag n' Drop
+
+   
 
     public void HideAndReveal()
     {

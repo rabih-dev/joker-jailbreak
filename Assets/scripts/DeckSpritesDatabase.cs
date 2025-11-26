@@ -28,6 +28,16 @@ public class DeckSpritesDatabase : ScriptableObject
         return null;
     }
 
+    public Sprite GetCardFace(bool isJoker)
+    {
+        if (isJoker)
+        {
+            return jokerSprite;
+        }
+
+        return null;
+    }
+
     public Sprite GetCardBack() 
     {
         return cardBack;

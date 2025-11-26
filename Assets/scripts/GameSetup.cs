@@ -12,7 +12,7 @@ public class GameSetup : MonoBehaviour
     private int suitCount = 4;
 
     //0 = spades | 1 = clubs | 2 = hearts | 3 = diamonds
-    private string[] cardSuits = { "spades", "clubs", "hearts", "diamonds" }; 
+    private string[] cardSuits = { "spades", "clubs", "hearts", "diamonds" };
 
     private List<GameObject> completeDeck = new List<GameObject>();
     private List<GameObject> currentDeck = new List<GameObject>();
@@ -26,7 +26,7 @@ public class GameSetup : MonoBehaviour
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    
+
     void Start()
     {
         GenerateDeck();
@@ -38,6 +38,12 @@ public class GameSetup : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void CardToJokerPile()
+    {
+        jokerPile.AddCard(currentDeck[currentDeck.Count - 1]);
+        currentDeck.RemoveAt(currentDeck.Count - 1);
     }
 
     private GameObject GenerateCard(string color, int value, string suit, int suitGenerationIndex)
@@ -63,29 +69,29 @@ public class GameSetup : MonoBehaviour
                 case 0:
                     for (int j = 1; j <= suitValues; j++)
                     {
-                        completeDeck.Add(GenerateCard("black", j, cardSuits[i],0));
-                        
+                        completeDeck.Add(GenerateCard("black", j, cardSuits[i], 0));
+
                     }
                     break;
 
                 case 1:
                     for (int j = 1; j <= suitValues; j++)
                     {
-                        completeDeck.Add(GenerateCard("black", j, cardSuits[i],1));
+                        completeDeck.Add(GenerateCard("black", j, cardSuits[i], 1));
                     }
                     break;
 
                 case 2:
                     for (int j = 1; j <= suitValues; j++)
                     {
-                        completeDeck.Add(GenerateCard("red", j, cardSuits[i],2));
+                        completeDeck.Add(GenerateCard("red", j, cardSuits[i], 2));
                     }
                     break;
 
                 case 3:
                     for (int j = 1; j <= suitValues; j++)
                     {
-                        completeDeck.Add(GenerateCard("red", j, cardSuits[i],3));
+                        completeDeck.Add(GenerateCard("red", j, cardSuits[i], 3));
                     }
                     break;
             }
@@ -124,7 +130,6 @@ public class GameSetup : MonoBehaviour
         return deck;
     }
 
-
     private void DealThePiles()
     {
         for (int pileIndex = 0; pileIndex < centerPiles.Length; pileIndex++)
@@ -149,6 +154,10 @@ public class GameSetup : MonoBehaviour
             }
         }
 
+        foreach (GameObject card in currentDeck)
+        {
+            deckPile.AddCard(card);
+        }
     }
 }
 
